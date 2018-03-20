@@ -30,6 +30,10 @@ public class Ball : MonoBehaviour {
 		else if (other.tag == "Wall") {
 			velocity = new Vector3 (-velocity.x, velocity.y, velocity.z);
 		}
+        else if(other.tag == "HorizontalWall")
+        {
+            velocity = new Vector3(velocity.x, velocity.y, -velocity.z);
+        }
 		gameObject.GetComponent<AudioSource> ().Play ();
 	}
 }
