@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void Hit()
+    {
+        gameObject.SetActive(false);
+        GameObject.FindObjectOfType<GameManager>().ReduceBrick();
+        // TODO: add point
+    }
 }

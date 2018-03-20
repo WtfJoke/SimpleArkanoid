@@ -28,9 +28,8 @@ public class Ball : MonoBehaviour {
                 break;
             case "Brick":
                 velocity = GetNormalicedVelocity(other);
+                other.gameObject.GetComponent<Brick>().Hit();
                 Destroy(other.gameObject);
-                GameObject.FindObjectOfType<GameManager>().ReduceBrick();
-                // TODO: add point
                 break;
             case "Wall":
                 velocity = new Vector3(-velocity.x, velocity.y, velocity.z);
@@ -39,7 +38,8 @@ public class Ball : MonoBehaviour {
                 velocity = new Vector3(velocity.x, velocity.y, -velocity.z);
                 break;
             case "LostBallWall":
-                // TODO: reduce life
+                // TODO Game over on lifes <= 0
+                GameObject.FindObjectOfType<GameManager>().Lifes--;
                 GameObject.FindGameObjectWithTag("Ball").transform.position = respawnPosition;
                 break;
         }
