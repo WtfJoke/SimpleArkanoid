@@ -38,8 +38,7 @@ public class Ball : MonoBehaviour {
                 velocity = new Vector3(velocity.x, velocity.y, -velocity.z);
                 break;
             case "LostBallWall":
-                // TODO Game over on lifes <= 0
-                GameObject.FindObjectOfType<GameManager>().Lifes--;
+                GameObject.FindObjectOfType<GameManager>().Points = 0;
                 GameObject.FindGameObjectWithTag("Ball").transform.position = respawnPosition;
                 break;
         }
