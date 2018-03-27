@@ -29,7 +29,6 @@ public class Ball : MonoBehaviour {
             case "Brick":
                 velocity = GetNormalicedVelocity(other);
                 other.gameObject.GetComponent<Brick>().Hit();
-                Destroy(other.gameObject);
                 break;
             case "Wall":
                 velocity = new Vector3(-velocity.x, velocity.y, velocity.z);

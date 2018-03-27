@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+    public static GameManager instance = null;
     public int remainingBricks;
     public Text pointsText;
     public int Points
@@ -16,8 +17,31 @@ public class GameManager : MonoBehaviour {
             pointsText.text = "Points: " + Points;
         }
     }
-
     private int _points;
+
+    void Awake()
+    {
+   
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            // This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
+        }
+
+        //Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
+
+      
+
+        //Call the InitGame function to initialize the first level 
+        // InitGame();
+    }
+
+   
 
     // Use this for initialization
     void Start () {
@@ -33,6 +57,5 @@ public class GameManager : MonoBehaviour {
     public void ReduceBrick()
     {
         remainingBricks -= 1;
-        Points++;
     }
 }
