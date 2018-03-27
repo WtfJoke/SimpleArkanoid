@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,20 +7,24 @@ public class Ball : MonoBehaviour {
 
 	public float zSpeed;
 	public float xMax;
-    public Vector3 respawnPosition = new Vector3(0, 0.5f, 0.7f);
     private Vector3 velocity;
+    private bool started;
+    private Paddle paddle;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		velocity = new Vector3 (0, 0, zSpeed);
+        started = true;
+        paddle = GameObject.FindObjectOfType<Paddle>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         transform.position += velocity * Time.deltaTime;
+        ShootBallWithSpace();
 	}
 
-	void OnTriggerEnter(Collider other){
+    void OnTriggerEnter(Collider other){
         switch (other.tag)
         {
             case "Player":
@@ -54,7 +59,38 @@ public class Ball : MonoBehaviour {
 
     private void Respawn()
     {
-        velocity = new Vector3(0, 0, zSpeed);
-        transform.position = respawnPosition;
+        StickToPaddle();       
+        started = false;
     }
+
+
+    private void ShootBallWithSpace()
+    {
+        if (started)
+        {
+            return;
+        }
+        else
+        {
+            StickToPaddle();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                velocity = new Vector3(0, 0, -zSpeed);
+                transform.parent = null;
+                started = true;
+            }
+        }
+    }
+
+    private void StickToPaddle()
+    {
+        velocity = new Vector3(0, 0, 0); // freeze ball
+        Vector3 playerPosition = paddle.transform.position;
+        Vector3 respawnPosition = playerPosition + new Vector3(0, 0, 1f);
+        transform.position = respawnPosition;
+        transform.parent = paddle.transform;
+    }
+
+
 }
