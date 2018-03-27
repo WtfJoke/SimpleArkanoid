@@ -6,17 +6,17 @@ public class Ball : MonoBehaviour {
 
 	public float zSpeed;
 	public float xMax;
-    public Vector3 respawnPosition = new Vector3(0,0.5f,0);
-	private Vector3 velocity;
+    public Vector3 respawnPosition = new Vector3(0, 0.5f, 0.7f);
+    private Vector3 velocity;
 
 	// Use this for initialization
 	void Start () {
 		velocity = new Vector3 (0, 0, zSpeed);
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position += velocity * Time.deltaTime;
+        transform.position += velocity * Time.deltaTime;
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -37,8 +37,8 @@ public class Ball : MonoBehaviour {
                 velocity = new Vector3(velocity.x, velocity.y, -velocity.z);
                 break;
             case "LostBallWall":
-                GameManager.instance.Points = 0;
-                GameObject.FindGameObjectWithTag("Ball").transform.position = respawnPosition;
+                GameManager.instance.Lifes--;
+                Respawn();
                 break;
         }
 	}
@@ -50,5 +50,11 @@ public class Ball : MonoBehaviour {
         float normalizedDistance = actualDistance / maxDistance;
 
         return new Vector3(normalizedDistance * xMax, velocity.y, -velocity.z);
+    }
+
+    private void Respawn()
+    {
+        velocity = new Vector3(0, 0, zSpeed);
+        transform.position = respawnPosition;
     }
 }

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     public int remainingBricks;
     public Text pointsText;
+    public Text lifeText;
     public int Points
     {
         get { return _points; }
@@ -17,7 +18,23 @@ public class GameManager : MonoBehaviour {
             pointsText.text = "Points: " + Points;
         }
     }
+    public int Lifes
+    {
+        get { return _lifes; }
+        set
+        {
+            _lifes = value;
+            string hearts = "";
+            for (int i = 0; i < _lifes; i++)
+            {
+                hearts += "♡";
+            }
+            lifeText.text = hearts;
+
+        }
+    }
     private int _points;
+    private int _lifes;
 
     void Awake()
     {
@@ -47,6 +64,7 @@ public class GameManager : MonoBehaviour {
     void Start () {
         remainingBricks = GameObject.FindGameObjectsWithTag("Brick").Length;
         Points = 0;
+        Lifes = 3;
     }
 	
 	// Update is called once per frame
