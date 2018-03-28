@@ -30,11 +30,15 @@ public class GameManager : MonoBehaviour {
                 hearts += "♡";
             }
             lifeText.text = hearts;
-
+            if (_lifes == 0)
+            {
+                RestartGame();
+            }
         }
     }
     private int _points;
     private int _lifes;
+    private GameObject[] bricks;
 
     void Awake()
     {
@@ -52,28 +56,36 @@ public class GameManager : MonoBehaviour {
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
-      
+
 
         //Call the InitGame function to initialize the first level 
-        // InitGame();
+        InitGame();
     }
-
-   
-
-    // Use this for initialization
-    void Start () {
-        remainingBricks = GameObject.FindGameObjectsWithTag("Brick").Length;
-        Points = 0;
-        Lifes = 3;
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		// TODO restart game on remainingBricks == 0
-	}
+    
 
     public void ReduceBrick()
     {
         remainingBricks -= 1;
+        if (remainingBricks == 0)
+        {
+            RestartGame();
+        }
+    }
+
+    private void InitGame()
+    {
+        bricks = GameObject.FindGameObjectsWithTag("Brick");
+        RestartGame();
+    }
+
+    private void RestartGame()
+    {
+        foreach (var brick in bricks)
+        {
+            brick.GetComponent<Brick>().ResetState();
+        }
+        remainingBricks = bricks.Length;
+        Points = 0;
+        Lifes = 3;
     }
 }

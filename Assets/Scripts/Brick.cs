@@ -6,7 +6,12 @@ public class Brick : MonoBehaviour
 {
 
     public int lives = 1;
+    private int originLives;
 
+    public void Start()
+    {
+        originLives = lives;
+    }
 
     public void Hit()
     {
@@ -44,5 +49,11 @@ public class Brick : MonoBehaviour
         }
 
         GetComponent<Renderer>().material.color = colorToSet; // assign color
+    }
+
+    public void ResetState()
+    {
+        gameObject.SetActive(true);
+        lives = originLives;
     }
 }
