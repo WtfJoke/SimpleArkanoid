@@ -82,7 +82,10 @@ public class GameManager : MonoBehaviour {
     {
         foreach (var brick in bricks)
         {
-            brick.GetComponent<Brick>().ResetState();
+            if (!brick.activeSelf)
+            {
+                brick.GetComponent<Brick>().ResetState();
+            }
         }
         remainingBricks = bricks.Length;
         Points = 0;

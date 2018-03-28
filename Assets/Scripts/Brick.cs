@@ -55,5 +55,6 @@ public class Brick : MonoBehaviour
     {
         gameObject.SetActive(true);
         lives = originLives;
+        CycleBrickColor();
     }
 }
