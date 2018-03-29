@@ -51,6 +51,11 @@ public class Brick : MonoBehaviour
         GetComponent<Renderer>().material.color = colorToSet; // assign color
     }
 
+    public bool NeedsReset()
+    {
+        return !gameObject.activeSelf || (lives != originLives && originLives != 0);
+    }
+
     public void ResetState()
     {
         gameObject.SetActive(true);

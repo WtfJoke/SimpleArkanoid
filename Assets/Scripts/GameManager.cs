@@ -80,12 +80,14 @@ public class GameManager : MonoBehaviour {
 
     private void RestartGame()
     {
-        foreach (var brick in bricks)
+        foreach (var brickObj in bricks)
         {
-            if (!brick.activeSelf)
+            Brick brick = brickObj.GetComponent<Brick>();
+            if (brick.NeedsReset())
             {
-                brick.GetComponent<Brick>().ResetState();
+                brick.ResetState();
             }
+
         }
         remainingBricks = bricks.Length;
         Points = 0;
