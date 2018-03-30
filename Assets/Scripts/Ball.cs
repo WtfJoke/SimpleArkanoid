@@ -11,6 +11,8 @@ public class Ball : MonoBehaviour
     private Vector3 velocity;
     private bool started;
     private Paddle paddle;
+    // avoid multiple velocity changes when destroying multiple bricks at same time
+    private bool brickHitWithVelocityChange;
 
     // Use this for initialization
     void Start()
@@ -25,6 +27,7 @@ public class Ball : MonoBehaviour
     {
         transform.position += velocity * Time.deltaTime;
         ShootBallWithSpace();
+        brickHitWithVelocityChange = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -36,7 +39,11 @@ public class Ball : MonoBehaviour
                 gameObject.GetComponent<AudioSource>().Play();
                 break;
             case "Brick":
-                velocity = GetNormalicedVelocity(other);
+                if (!brickHitWithVelocityChange)
+                {
+                    velocity = GetNormalicedVelocity(other);
+                    brickHitWithVelocityChange = true;
+                }
                 other.gameObject.GetComponent<Brick>().Hit();
                 break;
             case "Wall":
@@ -89,7 +96,6 @@ public class Ball : MonoBehaviour
 
     private void StickToPaddle()
     {
-        velocity = new Vector3(0, 0, 0); // freeze ball
         Vector3 playerPosition = paddle.transform.position;
         Vector3 respawnPosition = playerPosition + new Vector3(0, 0, 1f);
         transform.position = respawnPosition;
