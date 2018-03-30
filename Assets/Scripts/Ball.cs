@@ -53,10 +53,15 @@ public class Ball : MonoBehaviour
                 velocity = new Vector3(velocity.x, velocity.y, -velocity.z);
                 break;
             case "LostBallWall":
-                GameManager.instance.Lifes--;
-                Respawn();
+                LooseLife();
                 break;
         }
+    }
+
+    public void LooseLife()
+    {
+        GameManager.instance.Lifes--;
+        Respawn();
     }
 
     public void Respawn()
