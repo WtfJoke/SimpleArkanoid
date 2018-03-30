@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour {
         remainingBricks -= 1;
         if (remainingBricks == 0)
         {
-            GameOver();
+            Won();
         }
     }
 
@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour {
         youWonText.gameObject.SetActive(true);
         restartText.gameObject.SetActive(true);
         isRunning = false;
+        GameObject.FindObjectOfType<Ball>().Respawn();
     }
 
     private void InitGame()
