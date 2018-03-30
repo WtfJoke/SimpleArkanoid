@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public float Speed = 3f;
+    public PowerUpType type; 
+    public enum PowerUpType { Enlarge, Shrink, TwoBalls, TwoPaddles};
 	
-	// Update is called once per frame
 	void Update () {
-		
-	}
+        float newPos = transform.position.z + Time.deltaTime * -Speed;
+        transform.position = new Vector3(transform.position.x, transform.position.y, newPos);
+    }
 }

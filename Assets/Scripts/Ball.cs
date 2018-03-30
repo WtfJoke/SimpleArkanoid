@@ -15,7 +15,7 @@ public class Ball : MonoBehaviour
     private bool brickHitWithVelocityChange;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         velocity = new Vector3(0, 0, zSpeed);
         started = true;
@@ -60,6 +60,12 @@ public class Ball : MonoBehaviour
 
     public void LooseLife()
     {
+        if (--GameManager.instance.activeBalls > 0)
+        {
+            // remove additional balls if they fall out
+            Destroy(gameObject);
+            return;
+        }
         GameManager.instance.Lifes--;
         Respawn();
     }
@@ -105,6 +111,17 @@ public class Ball : MonoBehaviour
         Vector3 respawnPosition = playerPosition + new Vector3(0, 0, 1f);
         transform.position = respawnPosition;
         transform.parent = paddle.transform;
+    }
+
+    public Vector3 getVelocity()
+    {
+        return velocity;
+    }
+
+    public void Rotate(Vector3 otherVelocity)
+    {
+        // Rotate duplicated ball
+        velocity = new Vector3(otherVelocity.x + 3.3f, otherVelocity.y, -otherVelocity.z);
     }
 
 

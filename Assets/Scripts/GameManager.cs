@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+    public int activeBalls = 1;
 
     private bool isRunning;
     private int _points;
@@ -75,6 +76,17 @@ public class GameManager : MonoBehaviour {
         {
             Won();
         }
+    }
+
+    public void SpawnBall()
+    {
+        activeBalls++;
+        Ball ball = GameObject.FindObjectOfType<Ball>();
+
+
+        Ball newBall = Instantiate<Ball>(ball);
+        newBall.Rotate(ball.getVelocity());
+
     }
 
     private void GameOver()
