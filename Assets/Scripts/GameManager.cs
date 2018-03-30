@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,10 @@ public class GameManager : MonoBehaviour {
         }
     }
     public int activeBalls = 1;
+    public int spawnPowerUpEvery = 4;
+    public PowerUp enlargePrefab;
+    public PowerUp shrinkPrefab;
+    public PowerUp twoBallsPrefab;
 
     private bool isRunning;
     private int _points;
@@ -75,6 +80,30 @@ public class GameManager : MonoBehaviour {
         if (remainingBricks == 0)
         {
             Won();
+        }
+    }
+
+    public void SpawnPowerUp(Transform spawnPos)
+    {
+        if (remainingBricks % spawnPowerUpEvery == 0)
+        {
+            int powerupCount = Enum.GetNames(typeof(PowerUp.PowerUpType)).Length;
+            int random = UnityEngine.Random.Range(0, powerupCount);
+            switch (random)
+            {
+                case 0:
+                    Instantiate<PowerUp>(enlargePrefab, spawnPos.position, spawnPos.rotation);
+                    break;
+                case 1:
+                    Instantiate<PowerUp>(shrinkPrefab, spawnPos.position, spawnPos.rotation);
+                    break;
+                case 2:
+                    Instantiate<PowerUp>(twoBallsPrefab, spawnPos.position, spawnPos.rotation);
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 

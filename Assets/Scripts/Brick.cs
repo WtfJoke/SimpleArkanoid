@@ -22,6 +22,7 @@ public class Brick : MonoBehaviour
         {
             gameObject.SetActive(false);
             GameManager.instance.ReduceBrick();
+            GameManager.instance.SpawnPowerUp(gameObject.transform);
         }
         else
         {

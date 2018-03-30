@@ -6,7 +6,7 @@ public class PowerUp : MonoBehaviour {
 
     public float Speed = 3f;
     public PowerUpType type; 
-    public enum PowerUpType { Enlarge, Shrink, TwoBalls, TwoPaddles};
+    public enum PowerUpType { Enlarge, Shrink, TwoBalls};
 	
 	void Update () {
         float newPos = transform.position.z + Time.deltaTime * -Speed;
