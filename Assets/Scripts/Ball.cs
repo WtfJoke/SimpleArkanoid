@@ -3,28 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour {
+public class Ball : MonoBehaviour
+{
 
-	public float zSpeed;
-	public float xMax;
+    public float zSpeed;
+    public float xMax;
     private Vector3 velocity;
     private bool started;
     private Paddle paddle;
 
     // Use this for initialization
-    void Start () {
-		velocity = new Vector3 (0, 0, zSpeed);
+    void Start()
+    {
+        velocity = new Vector3(0, 0, zSpeed);
         started = true;
         paddle = GameObject.FindObjectOfType<Paddle>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         transform.position += velocity * Time.deltaTime;
         ShootBallWithSpace();
-	}
+    }
 
-    void OnTriggerEnter(Collider other){
+    void OnTriggerEnter(Collider other)
+    {
         switch (other.tag)
         {
             case "Player":
@@ -46,7 +50,13 @@ public class Ball : MonoBehaviour {
                 Respawn();
                 break;
         }
-	}
+    }
+
+    public void Respawn()
+    {
+        StickToPaddle();
+        started = false;
+    }
 
     private Vector3 GetNormalicedVelocity(Collider other)
     {
@@ -55,12 +65,6 @@ public class Ball : MonoBehaviour {
         float normalizedDistance = actualDistance / maxDistance;
 
         return new Vector3(normalizedDistance * xMax, velocity.y, -velocity.z);
-    }
-
-    private void Respawn()
-    {
-        StickToPaddle();       
-        started = false;
     }
 
 

@@ -92,5 +92,6 @@ public class GameManager : MonoBehaviour {
         remainingBricks = bricks.Length;
         Points = 0;
         Lifes = 3;
+        GameObject.FindObjectOfType<Ball>().Respawn();
     }
 }
