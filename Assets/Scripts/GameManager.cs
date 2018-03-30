@@ -42,23 +42,14 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
-   
         if (instance == null)
         {
             instance = this;
         }
         else if (instance != this)
         {
-            // This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
         }
-
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
-
-
-
-        //Call the InitGame function to initialize the first level 
         InitGame();
     }
     
