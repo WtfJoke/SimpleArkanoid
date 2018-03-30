@@ -75,10 +75,10 @@ public class GameManager : MonoBehaviour {
     private void InitGame()
     {
         bricks = GameObject.FindGameObjectsWithTag("Brick");
-        RestartGame();
+        StartGame();
     }
 
-    private void RestartGame()
+    private void StartGame()
     {
         foreach (var brickObj in bricks)
         {
@@ -92,6 +92,11 @@ public class GameManager : MonoBehaviour {
         remainingBricks = bricks.Length;
         Points = 0;
         Lifes = 3;
+    }
+
+    private void RestartGame()
+    {
+        StartGame();
         GameObject.FindObjectOfType<Ball>().Respawn();
     }
 }
