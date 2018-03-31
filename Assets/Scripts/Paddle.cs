@@ -8,6 +8,7 @@ public class Paddle : MonoBehaviour {
 	public Transform floor;
 
     private Vector3 originalScale;
+    private int enlargeConsumed = 0;
 
 	void Start () {
         originalScale = transform.localScale;
@@ -36,8 +37,12 @@ public class Paddle : MonoBehaviour {
         switch (powerUp.type)
         {
             case PowerUp.PowerUpType.Enlarge:
-                ChangeScaleWithoutBallScale(new Vector3(transform.localScale.x * 2, transform.localScale.y, transform.localScale.z));
-                AudioManager.instance.powerUpCollected.Play();
+                if (enlargeConsumed < 3)
+                {
+                    ChangeScaleWithoutBallScale(new Vector3(transform.localScale.x * 2, transform.localScale.y, transform.localScale.z));
+                    AudioManager.instance.powerUpCollected.Play();
+                    enlargeConsumed++;
+                }
                 break;
             case PowerUp.PowerUpType.Shrink:
                 ChangeScaleWithoutBallScale(new Vector3(transform.localScale.x / 2, transform.localScale.y, transform.localScale.z));
@@ -91,5 +96,6 @@ public class Paddle : MonoBehaviour {
     public void ResetScale()
     {
         ChangeScaleWithoutBallScale(originalScale);
+        enlargeConsumed = 0;
     }
 }
