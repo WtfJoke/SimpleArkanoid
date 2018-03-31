@@ -118,9 +118,8 @@ public class Ball : MonoBehaviour
         return velocity;
     }
 
-    public void Rotate(Vector3 otherVelocity)
+    public void ChangeFlightDirection(Vector3 otherVelocity)
     {
-        // Rotate duplicated ball
         velocity = new Vector3(otherVelocity.x + 3.3f, otherVelocity.y, -otherVelocity.z);
     }
 

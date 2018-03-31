@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour {
         {
             int powerupCount = Enum.GetNames(typeof(PowerUp.PowerUpType)).Length;
             int random = UnityEngine.Random.Range(0, powerupCount);
+            
             switch (random)
             {
                 case 0:
@@ -114,8 +115,7 @@ public class GameManager : MonoBehaviour {
 
 
         Ball newBall = Instantiate<Ball>(ball);
-        newBall.Rotate(ball.getVelocity());
-
+        newBall.ChangeFlightDirection(ball.getVelocity());
     }
 
     private void GameOver()
@@ -164,5 +164,6 @@ public class GameManager : MonoBehaviour {
     {
         StartGame();
         GameObject.FindObjectOfType<Ball>().Respawn();
+        activeBalls = 1;
     }
 }

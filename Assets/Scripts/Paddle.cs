@@ -30,22 +30,27 @@ public class Paddle : MonoBehaviour {
         {
             return;
         }
-        switch (other.GetComponent<PowerUp>().type)
+
+        PowerUp powerUp = other.GetComponent<PowerUp>();
+
+        switch (powerUp.type)
         {
             case PowerUp.PowerUpType.Enlarge:
                 transform.localScale = new Vector3(transform.localScale.x * 2, transform.localScale.y, transform.localScale.z);
+                AudioManager.instance.powerUpCollected.Play();
                 break;
             case PowerUp.PowerUpType.Shrink:
                 transform.localScale = new Vector3(transform.localScale.x / 2, transform.localScale.y, transform.localScale.z);
+                AudioManager.instance.powerDownCollected.Play();
                 break;
             case PowerUp.PowerUpType.TwoBalls:
                 GameManager.instance.SpawnBall();
+                AudioManager.instance.powerUpCollected.Play();
                 break;
             default:
                 break;
-                
         }
-        Destroy(other.gameObject);
+        Destroy(powerUp.gameObject);
 
     }
 }
