@@ -9,6 +9,7 @@ public class Paddle : MonoBehaviour {
 
     private Vector3 originalScale;
     private int enlargeConsumed = 0;
+    private static int MAXENLARGECONSUMED = 2;
 
 	void Start () {
         originalScale = transform.localScale;
@@ -37,7 +38,7 @@ public class Paddle : MonoBehaviour {
         switch (powerUp.type)
         {
             case PowerUp.PowerUpType.Enlarge:
-                if (enlargeConsumed < 3)
+                if (enlargeConsumed < MAXENLARGECONSUMED)
                 {
                     ChangeScaleWithoutBallScale(new Vector3(transform.localScale.x * 2, transform.localScale.y, transform.localScale.z));
                     AudioManager.instance.powerUpCollected.Play();
@@ -47,6 +48,10 @@ public class Paddle : MonoBehaviour {
             case PowerUp.PowerUpType.Shrink:
                 ChangeScaleWithoutBallScale(new Vector3(transform.localScale.x / 2, transform.localScale.y, transform.localScale.z));
                 AudioManager.instance.powerDownCollected.Play();
+                if (enlargeConsumed > 0)
+                {
+                    enlargeConsumed--;
+                }
                 break;
             case PowerUp.PowerUpType.TwoBalls:
                 Ball ball = DetachBall();
