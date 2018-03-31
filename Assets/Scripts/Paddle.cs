@@ -36,15 +36,17 @@ public class Paddle : MonoBehaviour {
         switch (powerUp.type)
         {
             case PowerUp.PowerUpType.Enlarge:
-                transform.localScale = new Vector3(transform.localScale.x * 2, transform.localScale.y, transform.localScale.z);
+                ChangeScaleWithoutBallScale(new Vector3(transform.localScale.x * 2, transform.localScale.y, transform.localScale.z));
                 AudioManager.instance.powerUpCollected.Play();
                 break;
             case PowerUp.PowerUpType.Shrink:
-                transform.localScale = new Vector3(transform.localScale.x / 2, transform.localScale.y, transform.localScale.z);
+                ChangeScaleWithoutBallScale(new Vector3(transform.localScale.x / 2, transform.localScale.y, transform.localScale.z));
                 AudioManager.instance.powerDownCollected.Play();
                 break;
             case PowerUp.PowerUpType.TwoBalls:
+                Ball ball = DetachBall();
                 GameManager.instance.SpawnBall();
+                ReAttachBall(ball);
                 AudioManager.instance.powerUpCollected.Play();
                 break;
             default:
@@ -52,5 +54,29 @@ public class Paddle : MonoBehaviour {
         }
         Destroy(powerUp.gameObject);
 
+    }
+
+    private void ChangeScaleWithoutBallScale(Vector3 newScale)
+    {
+        // Detach ball
+        Ball ball = DetachBall();
+
+        // change scale
+        transform.localScale = newScale;
+
+        // Reattach ball
+        ReAttachBall(ball);
+    }
+
+    private void ReAttachBall(Ball ball)
+    {
+        ball.transform.parent = transform;
+    }
+
+    private Ball DetachBall()
+    {
+        Ball ball = gameObject.GetComponentInChildren<Ball>();
+        ball.transform.parent = null;
+        return ball;
     }
 }
