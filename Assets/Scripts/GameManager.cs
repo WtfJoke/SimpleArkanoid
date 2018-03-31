@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
     {
         StartGame();
         ReduceAndRespawnBall();
+        GameObject.FindObjectOfType<Paddle>().ResetScale();
     }
 
     private void ReduceAndRespawnBall()

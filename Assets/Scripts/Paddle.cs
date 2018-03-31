@@ -7,12 +7,12 @@ public class Paddle : MonoBehaviour {
     public Vector3 speed;
 	public Transform floor;
 
-	// Use this for initialization
+    private Vector3 originalScale;
+
 	void Start () {
-		
+        originalScale = transform.localScale;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         float direction = Input.GetAxis("Horizontal");
 		float newPos = transform.position.x + direction * Time.deltaTime * speed.x;
@@ -70,13 +70,26 @@ public class Paddle : MonoBehaviour {
 
     private void ReAttachBall(Ball ball)
     {
+        if (ball == null)
+        {
+            return;
+        }
         ball.transform.parent = transform;
     }
 
     private Ball DetachBall()
     {
         Ball ball = gameObject.GetComponentInChildren<Ball>();
-        ball.transform.parent = null;
+        if (ball != null)
+        {
+            ball.transform.parent = null;
+        }
+        
         return ball;
+    }
+
+    public void ResetScale()
+    {
+        ChangeScaleWithoutBallScale(originalScale);
     }
 }
