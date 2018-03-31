@@ -4,3 +4,4 @@ Features:
 - Powerups (Paddle größer, mehrere Bälle, Paddle kleiner)
 - Leben
 - Punktezähler
+- Game Over / Winning - Screen mit anschliessendem Neustart
