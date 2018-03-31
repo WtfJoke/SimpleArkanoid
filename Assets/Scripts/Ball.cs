@@ -60,10 +60,11 @@ public class Ball : MonoBehaviour
 
     public void LooseLife()
     {
-        if (--GameManager.instance.activeBalls > 0)
+        if (GameManager.instance.activeBalls-1 > 0)
         {
             // remove additional balls if they fall out
             Destroy(gameObject);
+            GameManager.instance.activeBalls--;
             return;
         }
         GameManager.instance.Lifes--;
