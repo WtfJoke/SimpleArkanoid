@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager instance = null;
     public int remainingBricks;
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour {
     private int _points;
     private int _lifes;
     private GameObject[] bricks;
-    
+
     void Awake()
     {
         if (instance == null)
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour {
     {
         if (!isRunning && Input.GetKeyDown(KeyCode.Space))
         {
-            RestartGame();   
+            RestartGame();
         }
     }
 
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour {
         {
             int powerupCount = Enum.GetNames(typeof(PowerUp.PowerUpType)).Length;
             int random = UnityEngine.Random.Range(0, powerupCount);
-            
+
             switch (random)
             {
                 case 0:
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour {
         youWonText.gameObject.SetActive(true);
         restartText.gameObject.SetActive(true);
         isRunning = false;
-        GameObject.FindObjectOfType<Ball>().Respawn();
+        ReduceAndRespawnBall();
     }
 
     private void InitGame()
@@ -163,7 +164,18 @@ public class GameManager : MonoBehaviour {
     private void RestartGame()
     {
         StartGame();
+        ReduceAndRespawnBall();
+    }
+
+    private void ReduceAndRespawnBall()
+    {
+        while (activeBalls > 1)
+        {
+            Ball ball = GameObject.FindObjectOfType<Ball>();
+            Destroy(ball.gameObject);
+            activeBalls--;
+        }
+
         GameObject.FindObjectOfType<Ball>().Respawn();
-        activeBalls = 1;
     }
 }
